@@ -1,0 +1,6 @@
+[package]
+name = "DGTProject1"
+version = "0.1.0"
+authors = ["raeltik <Raeltik>"]
+
+[dependencies]
