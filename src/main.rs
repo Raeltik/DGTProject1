@@ -24,7 +24,7 @@ struct Flag {
 fn handle_json(mut stream: TcpStream){
 	let mut buffer = String::new();
 
-	stream.read_to_string(&mut buffer).unwrap();
+	stream.read_to_string(&mut buffer).expect("No input");
 //	let response = String::from_utf8( buffer ).unwrap();
 	//println!("{}",buffer)
     let flag: Value = serde_json::from_str(&buffer).unwrap();
