@@ -23,10 +23,11 @@ struct Flag {
 
 fn handle_json(mut stream: TcpStream){
 	let mut buffer = String::new();
-
+    println!("Reading input");
 	stream.read_to_string(&mut buffer).expect("No input");
 //	let response = String::from_utf8( buffer ).unwrap();
-	//println!("{}",buffer)
+	println!("Got the input");
+    println!("{}",buffer);
     let flag: Value = serde_json::from_str(&buffer).unwrap();
     println!("{}",flag);
     println!("{} {} {}",flag["user_key"],flag["challenge_key"],flag["flag"])
