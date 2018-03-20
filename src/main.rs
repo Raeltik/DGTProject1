@@ -8,7 +8,8 @@ extern crate serde_json;
 #[macro_use]
 extern crate serde_derive;
 
-use serde_json::{Value, Error};
+use serde_json::{Value};
+//use serde_json::{Value, Error};
 /*
 #[derive(Serialize, Deserialize)]
 struct Flag {
@@ -24,14 +25,24 @@ struct Flag {
 fn handle_json(mut stream: TcpStream){
 	let mut buffer = String::new();
     println!("Reading input");
-	stream.read_to_string(&mut buffer).expect("No input");
+	stream.read_to_string(&mut buffer).unwrap();
 //	let response = String::from_utf8( buffer ).unwrap();
-	println!("Got the input");
-    println!("{}",buffer);
-    let flag: Value = serde_json::from_str(&buffer).unwrap();
-    println!("{}",flag);
-    println!("{} {} {}",flag["user_key"],flag["challenge_key"],flag["flag"])
-
+    if buffer.chars().count() == 0 {
+        println!("No input was given");
+        let response = "No input was given";
+        stream.write_all(response.as_bytes()).unwrap();
+        stream.flush().unwrap();
+    } else {
+        println!("Got the input");
+	    println!("Recieved roughly {} characters",buffer.chars().count());
+        println!("{}",buffer);
+        let flag: Value = serde_json::from_str(&buffer).unwrap_or_default();   
+        if flag.is_null(){
+            println!("Bad JSON");
+        }else{ 
+            println!("{}",flag)
+        }
+    }
 }                                                                                                                                               
 fn main() {
 	
@@ -47,7 +58,7 @@ fn main() {
 				let stream = stream;
 				handle_json(stream)
 			}
-		Err(e) => {/*   Connection error handling*/}
+		Err(_e) => {/*   Connection error handling*/}
 		}
 
 	}
