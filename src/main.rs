@@ -53,7 +53,8 @@ fn handle_json(mut stream: TcpStream){
         println!("{:?}",flag_json);
         println!("Set flag_json");
         let flag_value = flag_json;
-		println!("{:?}",flag_value["flag"])
+//		println!("{:?}",flag_value["flag"])
+        println!("{:?}",flag_value.flag)
 //        match flag_value {
 //            Ok(_) => println!("it worked"),
 //            Err(err) => println!("{}",err)
